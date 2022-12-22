@@ -2,7 +2,8 @@ import express from "express";
 import morgan from "morgan";
 import bodyParser from "body-parser";
 import { Pool } from 'pg';
-import {blogRoutes} from "./routes/blog";
+import { blogRoutes } from "./routes/blog";
+import { slugRoutes } from "./routes/blogSlug";
 import { config } from 'dotenv';
 
 config({ path: '.env' });
@@ -26,6 +27,7 @@ app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: true })); // incase we have post request
 
 app.use("/api/blogs", blogRoutes(db));
+app.use("/api/blogs/slug", slugRoutes(db));
 
 app.get("/", (req, res) => {
   res.send("Hi there!");
